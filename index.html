@@ -5,73 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💰 Isal Money Converter</title>
     <style>
-        body { font-family: 'Arial Rounded MT Bold', Arial, sans-serif; background: linear-gradient(135deg, #ff7417, #cf5a00); min-height: 100vh; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 600px; margin: 50px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        h1 { color: #ff7417; text-align: center; font-size: 2.5em; margin-bottom: 30px; }
-        .converter-box { display: flex; flex-direction: column; gap: 20px; }
-        .input-group { display: flex; gap: 10px; }
-        input, select { padding: 15px; border: 2px solid #ffb40c; border-radius: 10px; font-size: 16px; flex: 1; }
-        input:focus, select:focus { outline: none; border-color: #ff7417; box-shadow: 0 0 8px #ffb40c; }
-        button { background: #ff7417; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-size: 18px; cursor: pointer; transition: background 0.3s; text-transform: uppercase; font-weight: bold; }
-        button:hover { background: #cf5a00; }
-        #result { font-size: 24px; text-align: center; padding: 20px; background: #fff8e5; border-radius: 10px; margin-top: 20px; color: #cf5a00; }
-        .emoji { font-size: 1.2em; }
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #ff7417;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #cf5a00;
+            margin: 0 0 20px 0;
+            font-size: 1.8em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb40c;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #cf5a00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #ff7417;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffb40c;
+            border-radius: 8px;
+            color: #cf5a00;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .emoji {
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>💰 ISAL MONEY CONVERTER 🌍</h1>
-        <div class="converter-box">
-            <div class="input-group">
-                <input type="number" id="amount" placeholder="💰 Enter amount" step="0.01">
-                <select id="fromCurrency">
-                    <option value="USD">🇺🇸 US Dollar</option>
-                    <option value="EUR">🇪🇺 Euro</option>
-                    <option value="GBP">🇬🇧 British Pound</option>
-                    <option value="JPY">🇯🇵 Japanese Yen</option>
-                    <option value="IDR">🇮🇩 Indonesian Rupiah</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <input type="number" id="convertedAmount" placeholder="🔄 Converted amount" disabled>
-                <select id="toCurrency">
-                    <option value="EUR">🇪🇺 Euro</option>
-                    <option value="USD">🇺🇸 US Dollar</option>
-                    <option value="GBP">🇬🇧 British Pound</option>
-                    <option value="JPY">🇯🇵 Japanese Yen</option>
-                    <option value="IDR">🇮🇩 Indonesian Rupiah</option>
-                </select>
-            </div>
-            <button onclick="convertCurrency()">✨ CONVERT NOW ✨</button>
-            <div id="result"></div>
+        <h1 class="emoji">💰 Isal Money Converter 💸</h1>
+        
+        <div class="input-group">
+            <label>💵 Amount:</label>
+            <input type="number" id="amount" placeholder="Enter amount" min="0">
         </div>
+
+        <div class="input-group">
+            <label>📤 From:</label>
+            <select id="fromCurrency">
+                <option value="USD">🇺🇸 US Dollar ($)</option>
+                <option value="EUR">🇪🇺 Euro (€)</option>
+                <option value="GBP">🇬🇧 British Pound (£)</option>
+                <option value="JPY">🇯🇵 Japanese Yen (¥)</option>
+                <option value="IDR">🇮🇩 Indonesian Rupiah (Rp)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>📥 To:</label>
+            <select id="toCurrency">
+                <option value="IDR">🇮🇩 Indonesian Rupiah (Rp)</option>
+                <option value="USD">🇺🇸 US Dollar ($)</option>
+                <option value="EUR">🇪🇺 Euro (€)</option>
+                <option value="GBP">🇬🇧 British Pound (£)</option>
+                <option value="JPY">🇯🇵 Japanese Yen (¥)</option>
+            </select>
+        </div>
+
+        <button onclick="convertCurrency()" class="emoji">🔄 Convert Now!</button>
+        
+        <div id="result"></div>
     </div>
+
     <script>
-        const exchangeRates = {
-            USD: { EUR: 0.93, GBP: 0.80, JPY: 157.34, IDR: 16121.50, USD: 1 },
-            EUR: { USD: 1.07, GBP: 0.86, JPY: 168.50, IDR: 17250.00, EUR: 1 },
-            GBP: { USD: 1.25, EUR: 1.16, JPY: 196.50, IDR: 20015.00, GBP: 1 },
-            JPY: { USD: 0.0064, EUR: 0.0059, GBP: 0.0051, IDR: 102.50, JPY: 1 },
-            IDR: { USD: 0.000062, EUR: 0.000058, GBP: 0.000050, JPY: 0.0098, IDR: 1 }
+        // BCA Bank exchange rates (example rates - replace with actual BCA rates)
+        const rates = {
+            USD: { 
+                IDR: 16580,
+                EUR: 0.96,
+                GBP: 0.73,
+                JPY: 110.5,
+                USD: 1
+            },
+            EUR: {
+                IDR: 17220,
+                USD: 1.18,
+                GBP: 0.86,
+                JPY: 130.2,
+                EUR: 1
+            },
+            GBP: {
+                IDR: 20800,
+                USD: 1.37,
+                EUR: 1.16,
+                JPY: 151.3,
+                GBP: 1
+            },
+            JPY: {
+                IDR: 110,
+                USD: 0.0091,
+                EUR: 0.0077,
+                GBP: 0.0066,
+                JPY: 1
+            },
+            IDR: {
+                USD: 0.000069,
+                EUR: 0.000059,
+                GBP: 0.000051,
+                JPY: 0.0076,
+                IDR: 1
+            }
         };
 
         function convertCurrency() {
             const amount = parseFloat(document.getElementById('amount').value);
-            const fromCurrency = document.getElementById('fromCurrency').value;
-            const toCurrency = document.getElementById('toCurrency').value;
-            const rate = exchangeRates[fromCurrency][toCurrency];
-            const result = amount * rate;
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount)) {
+                alert('Please enter a valid amount! ⚠️');
+                return;
+            }
+
+            const rate = rates[from][to];
+            const result = (amount * rate).toFixed(2);
+            
             const resultElement = document.getElementById('result');
-            const emojis = ['🎉', '✨', '💸', '💰', '🌟'];
-            const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            const formatter = new Intl.NumberFormat(undefined, {
-                style: 'currency',
-                currency: toCurrency,
-                maximumFractionDigits: toCurrency === 'IDR' || toCurrency === 'JPY' ? 0 : 2
-            });
-            document.getElementById('convertedAmount').value = result.toFixed(2);
-            resultElement.innerHTML = `${randomEmoji} ${formatter.format(result)} ${randomEmoji}<br>
-                <small>1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}</small>`;
+            resultElement.innerHTML = `💸 ${amount} ${from} = ${result} ${to} 💰`;
+            resultElement.style.display = 'block';
         }
     </script>
 </body>
